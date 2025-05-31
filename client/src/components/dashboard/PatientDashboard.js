@@ -22,7 +22,7 @@ export default function PatientDashboard() {
 	const [bookedAppointments, setBookedAppointments] = useState([]);
 	const [patientsTreatedCount,setPatientsTreatedCount] = useState([]);
 	const [prescriptions, setPrescription] = useState([]);
-
+	const [availableAmbulances, setAvailableAmbulances] = useState([]);
 	const getAppMonth = (dateOfJoining) => {
 		if(!dateOfJoining){
 			return;
@@ -127,10 +127,23 @@ export default function PatientDashboard() {
             setPrescription(newResp);
         } 
     };
-
+	const getAvailableAmbulances = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/ambulances`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            const available = response.data.ambulances.filter(amb => amb.isAvailable);
+            setAvailableAmbulances(available);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 	useEffect(() => {
 		getBookedSlots();
 		getPrescription();
+		getAvailableAmbulances();
 	}, []);
 
 
@@ -228,8 +241,41 @@ export default function PatientDashboard() {
 						</div>
 					</div>
 				</div>
-			</div>
-			
-		</Box>
-	);
+				<div className='col-12 mt-5'>
+                    <div className='customPatientApt mx-auto'>
+                        <div className='topicHeader'>
+                            <h3 className='text-center'>Emergency Services</h3>
+                        </div>
+                        <div className='topicContent'>
+                            {availableAmbulances.length > 0 ? (
+                                availableAmbulances.map((ambulance) => (
+                                    <div className='contentCard mb-3' key={ambulance._id}>
+                                        <div className='apDetails'>
+                                            <p className='py-2'>
+                                                <span className='fw-bold'>Driver Name: </span>
+                                                {ambulance.driverName}
+                                            </p>
+                                            <p className='py-2'>
+                                                <span className='fw-bold'>Phone: </span>
+                                                {ambulance.driverPhone}
+                                            </p>
+                                            <p className='py-2'>
+                                                <span className='fw-bold'>Location: </span>
+                                                {ambulance.location}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className='contentCard-empty'>
+                                    <p className='fw-bolder'>No available ambulances at the moment</p>
+                                    <p>Please call emergency services if needed</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Box>
+    );
 }

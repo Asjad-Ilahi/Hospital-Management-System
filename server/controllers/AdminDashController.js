@@ -2,6 +2,8 @@ const User = require("../models/user.js");
 const Appointment = require("../models/appointment.js");
 const Prescription = require("../models/prescription.js");
 const mongoose = require("mongoose");
+const Ambulance = require("../models/ambulace.js");
+const Nurse = require("../models/nurse.js"); // Add this
 
 var moment = require('moment'); 
 
@@ -76,9 +78,71 @@ const getPatientsTreatedCount = async (req, res) =>{
         res.status(500).json({ errors: [error.message] });
     }
 }
- 
+const getAmbulanceCount = async (req, res) => {
+    try {
+        const totalAmbulances = await Ambulance.countDocuments();
+        const availableAmbulances = await Ambulance.countDocuments({ isAvailable: true });
+        res.json({
+            message: "success",
+            totalAmbulances,
+            availableAmbulances
+        });
+    } catch (error) {
+        res.status(500).json({ errors: [error.message] });
+    }
+};
+
+const addAmbulance = async (req, res) => {
+    try {
+        const { driverName, driverPhone, location } = req.body;
+        if (!driverName || !driverPhone || !location) {
+            return res.status(400).json({ errors: ["All fields are required"] });
+        }
+        
+        const ambulance = new Ambulance({
+            driverName,
+            driverPhone,
+            location,
+            isAvailable: true // Explicitly set default value
+        });
+        
+        const savedAmbulance = await ambulance.save();
+        res.status(201).json({ 
+            message: "Ambulance added successfully",
+            ambulance: savedAmbulance 
+        });
+    } catch (error) {
+        res.status(500).json({ errors: [error.message] });
+    }
+};
+
+const getAllAmbulances = async (req, res) => {
+    try {
+        const ambulances = await Ambulance.find();
+        res.json({
+            message: "success",
+            ambulances
+        });
+    } catch (error) {
+        res.status(500).json({ errors: [error.message] });
+    }
+};
+
+const getNurseCount = async (req, res) => {
+    try {
+      const count = await Nurse.countDocuments();
+      res.json({ message: "success", nurseCount: count });
+    } catch (error) {
+      res.status(500).json({ errors: [error.message] });
+    }
+  };
+
 module.exports = {
     getUserCountByRole,
     getAppointmentCount,
-    getPatientsTreatedCount
-}
+    getPatientsTreatedCount,
+    getAmbulanceCount,
+    addAmbulance,
+    getAllAmbulances,
+    getNurseCount
+};

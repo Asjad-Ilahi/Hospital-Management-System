@@ -1,7 +1,7 @@
 const User = require("../models/user.js");
 const Patient = require("../models/patient.js");
 const Doctor = require("../models/doctor.js");
-
+const Nurse = require("../models/nurse.js"); // Ad
 
 const getUsers = async (req, res) => {
 
@@ -84,76 +84,86 @@ const isUserValid = (newUser) => {
     }
 
 }
-
 const saveUser = async (req, res) => {
     let newUser = req.body;
     let userValidStatus = isUserValid(newUser);
     if (!userValidStatus.status) {
-        res.status(400).json({
-            message: 'error',
-            errors: userValidStatus.errors
-        });
-    }
-    else {
-        const newUser = new User(req.body);
-
-        User.create(
-            {
-                email: newUser.email,
-                username: newUser.username,
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                password: newUser.password,
-                userType: newUser.userType,
-                activated: true
-            },
-            (error, userDetails) => {
-                if (error) {
-                    res.status(400).json({ message: "error", errors: [error.message] });
-                } else {
-
-                    if (newUser.userType === "Doctor") {
-                        Doctor.create(
-                            {
-                                userId: userDetails._id,
-                                firstName: newUser.firstName,
-                                lastName: newUser.lastName,
-                                email: newUser.email
-                            },
-                            (error2, doctorDetails) => {
-                                if (error2) {
-                                    User.deleteOne({ _id: userDetails });
-                                    res.status(400).json({ message: "error", errors: [error2.message] });
-                                } else {
-                                    res.status(201).json({ message: "success" });
-                                }
-                            }
-                        );
-                    }
-                    if (newUser.userType === "Patient") {
-                        Patient.create(
-                            {
-                                userId: userDetails._id,
-                                firstName: newUser.firstName,
-                                lastName: newUser.lastName,
-                                email: newUser.email
-                            },
-                            (error2, patientDetails) => {
-                                if (error2) {
-                                    User.deleteOne({ _id: userDetails });
-                                    res.status(400).json({ message: "error", errors: [error2.message] });
-                                } else {
-                                    res.status(201).json({ message: "success" });
-                                }
-                            }
-                        );
-                    }
+      res.status(400).json({
+        message: "error",
+        errors: userValidStatus.errors
+      });
+    } else {
+      User.create(
+        {
+          email: newUser.email,
+          username: newUser.username,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          password: newUser.password,
+          userType: newUser.userType,
+          activated: true
+        },
+        (error, userDetails) => {
+          if (error) {
+            res.status(400).json({ message: "error", errors: [error.message] });
+          } else {
+            if (newUser.userType === "Doctor") {
+              Doctor.create(
+                {
+                  userId: userDetails._id,
+                  firstName: newUser.firstName,
+                  lastName: newUser.lastName,
+                  email: newUser.email
+                },
+                (error2, doctorDetails) => {
+                  if (error2) {
+                    User.deleteOne({ _id: userDetails._id });
+                    res.status(400).json({ message: "error", errors: [error2.message] });
+                  } else {
+                    res.status(201).json({ message: "success" });
+                  }
                 }
+              );
             }
-        );
-
+            if (newUser.userType === "Patient") {
+              Patient.create(
+                {
+                  userId: userDetails._id,
+                  firstName: newUser.firstName,
+                  lastName: newUser.lastName,
+                  email: newUser.email
+                },
+                (error2, patientDetails) => {
+                  if (error2) {
+                    User.deleteOne({ _id: userDetails._id });
+                    res.status(400).json({ message: "error", errors: [error2.message] });
+                  } else {
+                    res.status(201).json({ message: "success" });
+                  }
+                }
+              );
+            }
+            if (newUser.userType === "Nurse") {
+              Nurse.create(
+                {
+                  userId: userDetails._id
+                },
+                (error2, nurseDetails) => {
+                  if (error2) {
+                    User.deleteOne({ _id: userDetails._id });
+                    res.status(400).json({ message: "error", errors: [error2.message] });
+                  } else {
+                    res.status(201).json({ message: "success" });
+                  }
+                }
+              );
+            }
+          }
+        }
+      );
     }
-}
+  };
+
 
 const updateUser = async (req, res) => {
     let newUser = req.body;
@@ -173,29 +183,30 @@ const updateUser = async (req, res) => {
         }
     }
 }
-
+// Update deleteUser to handle Nurse deletion
 const deleteUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
-        if (user.userType == 'Doctor') {
-            const deleteddoctor = await Doctor.deleteOne({ userId: req.params.id });
-        }
-
-        if (user.userType == 'Patient') {
-            const deletedpaient = await Patient.deleteOne({ userId: req.params.id });
-        }
-
-        const deleteduser = await User.deleteOne({ _id: req.params.id });
-        res.status(200).json(deleteduser);
+      const user = await User.findById(req.params.id);
+      if (user.userType === "Doctor") {
+        await Doctor.deleteOne({ userId: req.params.id });
+      }
+      if (user.userType === "Patient") {
+        await Patient.deleteOne({ userId: req.params.id });
+      }
+      if (user.userType === "Nurse") {
+        await Nurse.deleteOne({ userId: req.params.id });
+      }
+      const deletedUser = await User.deleteOne({ _id: req.params.id });
+      res.status(200).json(deletedUser);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message });
     }
-}
-
-module.exports = {
+  };
+  
+  module.exports = {
     getUsers,
     getUserById,
     saveUser,
     updateUser,
     deleteUser
-}
+  };

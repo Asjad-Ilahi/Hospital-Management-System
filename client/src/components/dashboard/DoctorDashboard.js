@@ -63,7 +63,7 @@ export default function DoctorDashboard() {
 				}
 			}
 		);
-		if (response.data.message == "success") {
+		if (response.data.message === "success") {
 
 			let aptms = response.data.appointments;
 			console.log("aptms", aptms);
@@ -87,7 +87,7 @@ export default function DoctorDashboard() {
                 }
             }
         );
-        if (response.data.message == "success") {
+        if (response.data.message === "success") {
             let respPrescription = response.data.prescriptions;
             let newResp =respPrescription.sort((a, b) => {
                     const timeA = new Date(`${moment(new Date(a.appointmentId.appointmentDate.slice(0, -1))).format('MM/DD/YYYY')} ${a.appointmentId.appointmentTime}`);

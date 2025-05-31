@@ -40,7 +40,7 @@ const UserSchema = new Schema({
     userType: {
         type: String,
         required: true,
-        enum: ['Admin', 'Patient', 'Doctor'],
+        enum: ['Admin', 'Patient', 'Doctor','Nurse'],
     }
 },
     {

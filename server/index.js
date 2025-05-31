@@ -21,6 +21,9 @@ const MedicineRoute = require("./routes/MedicineRoute.js");
 const PrescriptionRoute = require("./routes/PrescriptionRoute.js");
 const InvoiceRoute = require("./routes/InvoiceRoute.js");
 const ProfileRoute = require("./routes/ProfileRoute.js");
+const adminDashController = require("./controllers/AdminDashController.js");
+const NurseRoute = require("./routes/NurseRoute.js");
+const NurseAppointmentRoute = require("./routes/NurseAppointmentRoute.js");
 
 
 app.use(cors());
@@ -29,7 +32,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGOCONNECTION, { useNewUrlParser: true });
-
 
 app.listen(process.env.PORT, () => {
     console.log("App listening on port " + process.env.PORT);
@@ -45,27 +47,30 @@ app.use(MedicineRoute);
 app.use(PrescriptionRoute);
 app.use(InvoiceRoute);
 app.use(ProfileRoute);
+app.use(NurseRoute);
+app.use(NurseAppointmentRoute);
+// API that get all patients
+app.get('/patients', getAllPatients);
 
+//API that gets a patient by ID
+app.get('/patients/:id', getPatientByID);
 
+//API for adding a patient
+app.post('/patients', createPatient);
 
-// // API that get all patients
-// app.get('/patients', getAllPatients);
+//API for editting a details of the patient by ID 
+app.put('/patients/:id', editPatientByID);
 
-// //API that gets a patient by ID
-// app.get('/patients/:id', getPatientByID);
+//API for deleting a patient by ID
+app.delete('/patients/:id', deletePatientByID);
 
-// //API for adding a patient
-// app.post('/patients', createPatient);
+// Ambulance Routes
+app.get('/count/ambulances', adminDashController.getAmbulanceCount);
+app.post('/ambulances', adminDashController.addAmbulance);
+app.get('/ambulances', adminDashController.getAllAmbulances);
 
-// //API for editting a details of the patient by ID 
-// app.put('/patients/:id', editPatientByID);
-
-// //API for deleting a  patient by ID
-// app.delete('/patients/:id', deletePatientByID);
 app.use('/api/paypal', require('./routes/api/paypal'));
-
 
 app.get("/", (req, res) => {
     res.send("hello world");
 });
-

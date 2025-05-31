@@ -16,5 +16,4 @@ router.post('/count/users', userAuth, getUserCountByRole);
 router.get('/count/appointments', userAuth, getAppointmentCount);
 router.get('/count/patients/treated', doctorAuth, getPatientsTreatedCount)
 
-
 module.exports = router
