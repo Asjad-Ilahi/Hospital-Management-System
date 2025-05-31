@@ -13,7 +13,7 @@ function NurseDashboard() {
     const fetchAppointments = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:3001/nurseAppointments", {
+        const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/nurseAppointments", {
           headers: { Authorization: `Bearer ${token}` }
         });
         

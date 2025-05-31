@@ -29,7 +29,7 @@ function MedicineList() {
     );
 
     const getmedicines = async () => {
-        const response = await axios.get("http://localhost:3001/medicines", {
+        const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/medicines", {
             params: {
                 name: name
             }
@@ -40,7 +40,7 @@ function MedicineList() {
     const deleteMedicine = async (id) => {
 
         try {
-            await axios.delete(`http://localhost:3001/medicines/${id}`);
+            await axios.delete(`https://hospital-management-system-six-snowy.vercel.app/medicines/${id}`);
             getmedicines();
         } catch (error) {
             setErrorList(error);

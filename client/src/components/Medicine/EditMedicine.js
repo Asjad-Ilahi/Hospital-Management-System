@@ -29,7 +29,7 @@ function Editmedicine() {
   }, []);
 
   const getmedicineById = async () => {
-    const response = await axios.get(`http://localhost:3001/medicines/${id}`);
+    const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/medicines/${id}`);
     console.log(response);
     setCompany(response.data.company);
     setName(response.data.name);
@@ -40,7 +40,7 @@ function Editmedicine() {
   const updatemedicine = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3001/medicines/${id}`, {
+      await axios.patch(`https://hospital-management-system-six-snowy.vercel.app/medicines/${id}`, {
         company,
         name,
         description,

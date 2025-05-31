@@ -24,7 +24,7 @@ function NurseList() {
   }, []);
 
   const getNurses = async () => {
-    const response = await axios.get("http://localhost:3001/nurses", {
+    const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/nurses", {
       params: { name },
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     });
@@ -33,7 +33,7 @@ function NurseList() {
 
   const deleteNurse = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/nurses/${id}`, {
+      await axios.delete(`https://hospital-management-system-six-snowy.vercel.app/nurses/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       getNurses();

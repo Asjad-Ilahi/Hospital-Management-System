@@ -80,7 +80,7 @@ function PatientAppointment() {
         }
         // console.log("reqObj",reqObj);
 
-        let response = await axios.put(`http://localhost:3001/appointments/`,
+        let response = await axios.put(`https://hospital-management-system-six-snowy.vercel.app/appointments/`,
             reqObj,
             {
                 headers: {
@@ -123,7 +123,7 @@ function PatientAppointment() {
         // newSlotList[newSlotList.length] = "hello"
         // setAvailableSlots(newSlotList);
         if (doctorSelected) {
-            let response = await axios.post(`http://localhost:3001/appointments`,
+            let response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/appointments`,
                 {
                     'isTimeSlotAvailable': true,
                     'appDate': formatDateForDateInput(date),
@@ -167,7 +167,7 @@ function PatientAppointment() {
         // newSlotList[newSlotList.length] = "hello"
         // setAvailableSlots(newSlotList);
         if (doctorSelected) {
-            let response = await axios.post(`http://localhost:3001/appointments`,
+            let response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/appointments`,
                 {
                     'isTimeSlotAvailable': false,
                     'appDate': formatDateForDateInput(date),
@@ -217,7 +217,7 @@ function PatientAppointment() {
 
     const deleteBookedSlots = async (appId) => {
         console.log("delete slot with id", appId);
-        let response = await axios.delete(`http://localhost:3001/appointments/`,
+        let response = await axios.delete(`https://hospital-management-system-six-snowy.vercel.app/appointments/`,
             {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -236,7 +236,7 @@ function PatientAppointment() {
     }
 
     const getDoctorList = async () => {
-        let response = await axios.get(`http://localhost:3001/doctors`,
+        let response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/doctors`,
             {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("token")}`
@@ -271,7 +271,7 @@ function PatientAppointment() {
     }
 
     const getDepartmentList = async () => {
-        let response = await axios.get(`http://localhost:3001/departments`,
+        let response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/departments`,
             {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("token")}`
@@ -290,7 +290,7 @@ function PatientAppointment() {
     }
 
     const getPatients = async () => {
-        const response = await axios.get("http://localhost:3001/patients");
+        const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/patients");
         setPatientList(response.data);
     };
 

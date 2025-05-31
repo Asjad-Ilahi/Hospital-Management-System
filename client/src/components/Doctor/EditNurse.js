@@ -32,7 +32,7 @@ function EditNurse() {
   }, []);
 
   const getNurseById = async () => {
-    const response = await axios.get(`http://localhost:3001/nurses/${id}`, {
+    const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/nurses/${id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     });
     setFirstName(response.data.firstName);
@@ -47,7 +47,7 @@ function EditNurse() {
   const updateNurse = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3001/nurses/${id}`, {
+      await axios.patch(`https://hospital-management-system-six-snowy.vercel.app/nurses/${id}`, {
         firstName,
         lastName,
         username,

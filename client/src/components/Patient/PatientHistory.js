@@ -34,7 +34,7 @@ function PatientHistory() {
 
   const getPatientById = async () => {
     // let patientUserId = currentUser.userId;
-    const response = await axios.get(`http://localhost:3001/patients/${id}`);
+    const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/patients/${id}`);
     // console.log(response);
     setPatientId(response.data._id);
     setFirstName(response.data.userId.firstName);
@@ -53,7 +53,7 @@ function PatientHistory() {
   
 
   const getHistory = async () =>{
-    let response = await axios.get(`http://localhost:3001/patients/history/${patientId}`, 
+    let response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/patients/history/${patientId}`, 
         {
             headers: {
                 authorization: `Bearer ${localStorage.getItem("token")}`

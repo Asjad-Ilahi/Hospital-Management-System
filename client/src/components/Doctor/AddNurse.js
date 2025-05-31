@@ -37,7 +37,7 @@ function AddNurse() {
       confirmPassword: form.confirmPassword.value,
     };
 
-    fetch('http://localhost:3001/nurses', {
+    fetch('https://hospital-management-system-six-snowy.vercel.app/nurses', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

@@ -56,7 +56,7 @@ export default function PatientDashboard() {
 
 	const getBookedSlots = async () => {
     
-            let response = await axios.post(`http://localhost:3001/appointments`,
+            let response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/appointments`,
                 {
                     'isTimeSlotAvailable': false
                 },
@@ -108,7 +108,7 @@ export default function PatientDashboard() {
     }
 	const getPrescription = async () => {
         
-        let response = await axios.post(`http://localhost:3001/prescriptions`,{},
+        let response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/prescriptions`,{},
             {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("token")}`
@@ -129,7 +129,7 @@ export default function PatientDashboard() {
     };
 	const getAvailableAmbulances = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/ambulances`, {
+            const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/ambulances`, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem("token")}`
                 }

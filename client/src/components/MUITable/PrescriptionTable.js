@@ -122,7 +122,7 @@ export default function PrecriptionTable({ prescriptionList }) {
 
     const handleDownloadReceipt = async (value) => {
         // console.log("Download Receipt clicked prescriptionId-", value)
-        const resp = await axios.get(`http://localhost:3001/prescription/invoice/${value}`,
+        const resp = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/prescription/invoice/${value}`,
         {
             responseType: 'blob',
         });

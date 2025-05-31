@@ -20,7 +20,7 @@ function BookNurse() {
   useEffect(() => {
     const fetchNurses = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/nurses", {
+        const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/nurses", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
         setNurses(response.data);
@@ -35,7 +35,7 @@ function BookNurse() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3001/nurseAppointments",
+        "https://hospital-management-system-six-snowy.vercel.app/nurseAppointments",
         {
           nurseId: selectedNurse,
           patientId: currentUser.userId, // Use actual patient ID from context

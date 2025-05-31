@@ -43,7 +43,7 @@ function AddUser() {
     }
 
 
-    fetch('http://localhost:3001/users', {
+    fetch('https://hospital-management-system-six-snowy.vercel.app/users', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',

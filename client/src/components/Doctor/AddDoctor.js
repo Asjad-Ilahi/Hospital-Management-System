@@ -42,7 +42,7 @@ function Adddoctor() {
     }
 
 
-    fetch('http://localhost:3001/doctors', {
+    fetch('https://hospital-management-system-six-snowy.vercel.app/doctors', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

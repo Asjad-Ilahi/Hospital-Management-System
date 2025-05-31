@@ -30,7 +30,7 @@ function Login() {
             email: form.email.value,
             password: form.password.value
         }
-        fetch('http://localhost:3001/login', {
+        fetch('https://hospital-management-system-six-snowy.vercel.app/login', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

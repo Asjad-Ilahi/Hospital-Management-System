@@ -33,12 +33,12 @@ export default function AdminDashboard() {
     const [errorMessage, setErrorMessage] = useState('');
 
     const getNurseCount = async () => {
-        const response = await axios.get("http://localhost:3001/nurses/count");
+        const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/nurses/count");
         setNurseCount(response.data.count);
     };
 
     const getUserCountByRole = async (userType) => {
-        const response = await axios.post(`http://localhost:3001/count/users`,
+        const response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/count/users`,
             { 'userType': userType },
             { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
         );
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
     };
 
     const getAppointmentCount = async () => {
-        const response = await axios.get(`http://localhost:3001/count/appointments`,
+        const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/count/appointments`,
             { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
         );
         if (response?.data?.totalAppointments) setAppsTodayCount(response.data.totalAppointments);
@@ -58,7 +58,7 @@ export default function AdminDashboard() {
     };
 
     const getBookedSlots = async () => {
-        let response = await axios.post(`http://localhost:3001/appointments`,
+        let response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/appointments`,
             { 'isTimeSlotAvailable': false, 'appDate': moment(new Date()).format('YYYY-MM-DD') },
             { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
         );
@@ -66,12 +66,12 @@ export default function AdminDashboard() {
     };
 
     const getDoctors = async () => {
-        const response = await axios.get("http://localhost:3001/doctors");
+        const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/doctors");
         setDoctors(response.data);
     };
 
     const getNurses = async () => {
-        const response = await axios.get("http://localhost:3001/nurses", {
+        const response = await axios.get("https://hospital-management-system-six-snowy.vercel.app/nurses", {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
         setNurses(response.data);
@@ -79,7 +79,7 @@ export default function AdminDashboard() {
 
     const getAmbulanceCount = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/count/ambulances`, {
+            const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/count/ambulances`, {
                 headers: { authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             setAmbulanceCount(response.data.totalAmbulances);
@@ -91,7 +91,7 @@ export default function AdminDashboard() {
 
     const getAllAmbulances = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/ambulances`, {
+            const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/ambulances`, {
                 headers: { authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             setAmbulances(response.data.ambulances);
@@ -109,7 +109,7 @@ export default function AdminDashboard() {
         setSuccessMessage('');
         setErrorMessage('');
         try {
-            const response = await axios.post(`http://localhost:3001/ambulances`, newAmbulance, {
+            const response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/ambulances`, newAmbulance, {
                 headers: { authorization: `Bearer ${localStorage.getItem("token")}` }
             });
             if (response.data.message === "Ambulance added successfully") {

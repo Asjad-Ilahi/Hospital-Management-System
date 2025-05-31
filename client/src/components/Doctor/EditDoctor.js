@@ -36,7 +36,7 @@ function Editdoctor() {
   }, []);
 
   const getdoctorById = async () => {
-    const response = await axios.get(`http://localhost:3001/doctors/${id}`);
+    const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/doctors/${id}`);
 
     setFirstName(response.data.userId.firstName);
     setLastName(response.data.userId.lastName);
@@ -53,7 +53,7 @@ function Editdoctor() {
   const updatedoctor = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3001/doctors/${id}`, {
+      await axios.patch(`https://hospital-management-system-six-snowy.vercel.app/doctors/${id}`, {
         firstName,
         lastName,
         username,

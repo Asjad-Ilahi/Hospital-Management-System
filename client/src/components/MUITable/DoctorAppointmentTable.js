@@ -86,7 +86,7 @@ export default function DoctorAppointmentTable({ bookedAppointments, deleteBooke
         }
 
         console.log(reqObj)
-        let response = await axios.post(`http://localhost:3001/prescription/`,
+        let response = await axios.post(`https://hospital-management-system-six-snowy.vercel.app/prescription/`,
             reqObj,
             {
                 headers: {
@@ -117,7 +117,7 @@ export default function DoctorAppointmentTable({ bookedAppointments, deleteBooke
     }
 
     const setFormProperties = async (appID) => {
-        const response = await axios.get(`http://localhost:3001/appointments/${appID}`, {
+        const response = await axios.get(`https://hospital-management-system-six-snowy.vercel.app/appointments/${appID}`, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem("token")}`
             }
