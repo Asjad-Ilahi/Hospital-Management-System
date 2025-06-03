@@ -156,7 +156,7 @@ export default function PatientDashboard() {
 					<h4> {currentUser.firstName} {currentUser.lastName} </h4>
 					<br/>
 					<div class={styles.horizontalLine}></div>
-					At Daro Darmals, we believe that every patient deserves the highest quality care possible. 
+					At Daro Darmal, we believe that every patient deserves the highest quality care possible. 
 					<br/>
 					Our commitment to excellence in healthcare is matched only by our compassion for those we serve.
 
